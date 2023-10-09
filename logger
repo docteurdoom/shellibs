@@ -42,7 +42,7 @@ __checks() {
 	command -v date &> /dev/null || die "Command 'date' not found ..."
 }
 
-msg() {
+__msg() {
 	info "Logger has been initialized."
 }
 
@@ -64,4 +64,4 @@ __time_test_logger() {
 	)
 }
 
-__checks && msg
+__checks && __msg

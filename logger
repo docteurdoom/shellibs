@@ -38,7 +38,7 @@ die() {
 	exit 1
 }
 
-checks() {
+__checks() {
 	command -v date &> /dev/null || die "Command 'date' not found ..."
 }
 
@@ -64,4 +64,4 @@ __time_test_logger() {
 	)
 }
 
-checks && msg
+__checks && msg

@@ -1,0 +1,67 @@
+#!/bin/bash
+
+RED='\x1b[0;31;1m'
+GRN='\x1b[0;32;1m'
+YLW='\x1b[0;33;1m'
+BLU='\x1b[0;34;1m'
+MAG='\x1b[0;35;1m'
+CYA='\x1b[0;36;1m'
+WHI='\x1b[0;37;1m'
+RST='\x1b[0m'
+
+__log_part() {
+	printf "[ $(date --rfc-3339=s) ${1}${2}${RST} ] "
+}
+
+info() {
+	__log_part "${GRN}" "INFO " && printf "$@\n"
+}
+
+warn() {
+	__log_part "${YLW}" "WARN " && printf "$@\n"
+}
+
+debug() {
+	__log_part "${MAG}" "DEBUG" && printf "$@\n"
+}
+
+trace() {
+	__log_part "${BLU}" "TRACE" && printf "$@\n"
+}
+
+error() {
+	__log_part "${RED}" "ERROR" && printf "$@\n"
+}
+
+die() {
+	error $@
+	exit 1
+}
+
+checks() {
+	command -v date &> /dev/null || die "Command 'date' not found ..."
+}
+
+msg() {
+	info "Logger has been initialized."
+}
+
+__test_logger() {
+	info "This is a test INFO  message."
+	warn "This is a test WARN  message."
+	debug "This is a test DEBUG message."
+	trace "This is a test TRACE message."
+	error "This is a test ERROR message."
+}
+
+__time_test_logger() {
+	time (
+		TIMES=10000
+		for ITER in $(seq 0 ${TIMES}); do
+			printf "Iteration ${ITER} / ${TIMES} ...\r"
+			test_logger
+		done
+	)
+}
+
+checks && msg

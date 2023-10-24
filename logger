@@ -33,13 +33,13 @@ error() {
 	__log_part "${RED}" "ERROR" && printf "$@\n"
 }
 
-die() {
+__die() {
 	error $@
 	exit 1
 }
 
 __checks() {
-	command -v date &> /dev/null || die "Command 'date' not found ..."
+	command -v date &> /dev/null || __die "Command 'date' not found ..."
 }
 
 __msg() {
@@ -58,10 +58,12 @@ __time_test_logger() {
 	time (
 		TIMES=10000
 		for ITER in $(seq 0 ${TIMES}); do
-			printf "Iteration ${ITER} / ${TIMES} ...\r"
-			test_logger
+			__test_logger
 		done
 	)
 }
 
 __checks && __msg
+
+[ "$1" == "--test" ] && __test_logger
+[ "$1" == "--time-test" ] && __time_test_logger

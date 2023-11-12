@@ -14,27 +14,27 @@ __log_part() {
 }
 
 info() {
-	__log_part "${GRN}" "INFO " && printf "$@\n"
+	__log_part "${GRN}" "INFO " && printf "$*\n"
 }
 
 warn() {
-	__log_part "${YLW}" "WARN " && printf "$@\n"
+	__log_part "${YLW}" "WARN " && printf "$*\n"
 }
 
 debug() {
-	__log_part "${MAG}" "DEBUG" && printf "$@\n"
+	__log_part "${MAG}" "DEBUG" && printf "$*\n"
 }
 
 trace() {
-	__log_part "${BLU}" "TRACE" && printf "$@\n"
+	__log_part "${BLU}" "TRACE" && printf "$*\n"
 }
 
 error() {
-	__log_part "${RED}" "ERROR" && printf "$@\n"
+	__log_part "${RED}" "ERROR" && printf "$*\n"
 }
 
 __die() {
-	error $@
+	error "$*"
 	exit 1
 }
 
